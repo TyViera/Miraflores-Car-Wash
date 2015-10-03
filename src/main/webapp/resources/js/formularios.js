@@ -231,7 +231,7 @@ function enviarDatosLavada(idCarro, baseURL) {
             carro: {
                 id: idCarro
             },
-            objetosEnCustodia : objetosCustodia
+            objetosEnCustodia: objetosCustodia
         };
     } else {
         estado = "REA";
@@ -311,3 +311,39 @@ function enviarDatosLavada(idCarro, baseURL) {
     console.log(JSON.stringify(datos));
 }
 
+function sendValId(urlBase) {
+    var datos;
+    datos = {
+        id: $('#id').val()
+    };
+    $.ajax({
+        data: JSON.stringify(datos),
+        type: 'POST',
+        url: urlBase + "/Lavada/marcarRealizada.html",
+        contentType: 'application/json',
+        success: function(data, textStatus, jqXHR) {
+            var html;
+            var redir;
+            html = "<div>";
+            html += "<p>";
+            if (data === "OK") {
+                html += "Actualización Correcta";
+                redir = true;
+            } else {
+                html += "Ocurrió un error, por favor intentelo otra vez";
+                redir = false;
+            }
+            html += "</p>";
+            html += "</div>";
+            $('#modalBody').html(html);
+            $('#btnOK').hide();
+            $('#myModal').modal();
+            if (redir) {
+                setTimeout(function() {
+                    window.location.href = urlBase + "/Lavada/pendientes.html";
+                }, 1000);
+            }
+            console.log(data);
+        }
+    });
+}

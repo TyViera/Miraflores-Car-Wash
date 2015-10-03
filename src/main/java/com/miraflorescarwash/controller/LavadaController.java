@@ -12,6 +12,8 @@ import com.miraflorescarwash.service.CarroService;
 import com.miraflorescarwash.service.LavadaDisponibleService;
 import com.miraflorescarwash.service.LavadaService;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -67,7 +69,7 @@ public class LavadaController {
         return "/Lavada/mostrar";
     }
     
-    @RequestMapping(value = "/pendientes.html", method = RequestMethod.GET)
+    @RequestMapping(value = "/pendientes.html", method = RequestMethod.GET) 
     public String doGetPendientes(Model model){
         model.addAttribute("lavadas", lavadaService.verLavadasPendientes());
         return "/Lavada/pendiente";
@@ -136,4 +138,22 @@ public class LavadaController {
     public @ResponseBody String doPostObj(@RequestBody String json){
         return "";
     }
+    
+    @RequestMapping(value = "/marcarRealizada.html", method = RequestMethod.POST)
+    public @ResponseBody String doPostMarcarRealizada(@RequestBody String json){
+        Lavada aux, lavada;
+        try {
+            aux = new ObjectMapper().readValue(json, Lavada.class);
+            lavada = lavadaService.findById(aux.getId());
+            if(lavada != null){
+                lavada.setEstado(Constantes.LAVADA_REALIZADA);
+                lavadaService.update(lavada);
+                return "OK";
+            }
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
+        return "ER";
+    }
+    
 }

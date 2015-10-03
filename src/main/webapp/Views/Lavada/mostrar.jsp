@@ -121,55 +121,6 @@
                             </div>
                         </div>
                     </div>
-                    <%--
-            <div class="form-group">
-                <label class="col-lg-2 control-label">Autos</label>
-                <div class="col-lg-10">
-                    <div class="form-control-static">
-                        <table class="table table-hover">
-                            <c:choose>
-                                <c:when test="${lavada.carros == null || lavada.carros.isEmpty()}">
-                                    <tr>
-                                        <td>
-                                            <p class="form-control-static">No hay resultados</p>
-                                        </td>
-                                    </tr>
-                                </c:when>
-                                <c:otherwise>
-                                    <thead>
-                                        <tr>
-                                            <th>Id</th>
-                                            <th>Modelo</th>
-                                            <th>Marca</th>
-                                            <th>Placa</th>
-                                        </tr>
-                                    </thead>
-                                    <c:forEach items="${lavada.carros}" var="carro">
-                                        <tr>
-                                            <td>${carro.id}</td>
-                                            <td>${carro.modelo.nombre}</td>
-                                            <td>${carro.marca}</td>
-                                            <td>${carro.placa}</td>
-                                        </tr>
-                                    </c:forEach>
-                                </c:otherwise>
-                            </c:choose>
-                            <tr>
-                                <td>
-                                    <spring:url value="/Carro/add.html?lavada=${lavada.id}" var="urlAddAuto" />
-                                    <button type="button" class="btn btn-info" 
-                                            onclick="location.href = '${urlAddAuto}'">
-                                        Agregar Nuevo Auto
-                                    </button>
-                                </td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </div>--%>
                 </form>
             </div>
         </section>

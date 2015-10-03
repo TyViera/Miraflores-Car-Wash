@@ -80,7 +80,7 @@
                                     </thead>
                                     <c:forEach items="${clientes}" var="cli">
                                         <tr>
-                                            <td><span onclick="alert('haber');">aksdnaksn</span></td>
+                                            <td></td>
                                             <td>${cli.id}</td>
                                             <td>${cli.nombres}</td>
                                             <td>${cli.apellidos}</td>

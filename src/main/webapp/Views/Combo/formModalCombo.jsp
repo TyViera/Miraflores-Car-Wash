@@ -8,40 +8,65 @@
                 <h4 class="modal-title">Seleccionar Combo</h4>
             </div>
             <div class="modal-body">
-                <script>
-                    var comboSel;
-                    comboSel = "";
-                </script>
-                <table class="table table-hover">
+                <table id="events-table-combo" 
+                       data-toggle="table" data-cache="false" 
+                       data-height="299" data-click-to-select="true" 
+                       data-show-refresh="true" data-show-toggle="true"
+                       data-show-columns="true" data-search="true" 
+                       data-select-item-name="toolbar1"
+                       data-select-item-name="radioName">
                     <thead>
                         <tr>
-                            <th>Sel&hellip;</th>
-                            <th>Nombre</th>
-                            <th>Lavadas</th>
-                            <th>Descripción</th>
+                            <th data-field="state" data-radio="true"></th>
+                            <th data-field="id">Id</th>
+                            <th data-field="nombre">Nombre</th>
+                            <th data-field="lavadas">Lavadas</th>
+                            <th data-field="descripcion">Descripción</th>
                         </tr>
                     </thead>
                     <c:forEach items="${combos}" var="cb">
                         <tr>
-                            <td>
-                                <input type="radio" name="radio" 
-                                       onclick="comboSel = this.value;
-                        $('#btnSelCombo').attr('disabled', false)"
-                                       value='{"id":"${cb.id}", "descripcion": "${cb.descripcion}", "nombre":"${cb.nombre}", "numeroLavadas":"${cb.numeroLavadas}"}' />
-                            </td>
+                            <td></td>
+                            <td>${cb.id}</td>
                             <td>${cb.nombre}</td>
                             <td>${cb.numeroLavadas}</td>
                             <td>${cb.descripcion}</td>
                         </tr>
                     </c:forEach>
                 </table>
+                <script>
+                    var posibleData;
+                    posibleData = '';
+                    $('#btnSelComboOpenModal').click(function() {
+                        $('#events-table-combo').bootstrapTable({
+                        }).on('dbl-click-row.bs.table', function(e, row, $element) {
+//                            $('#id').attr('value', row.id);
+                            posibleData = {
+                                id: row.id,
+                                nombre: row.nombre,
+                                numeroLavadas: row.lavadas,
+                                descripcion: row.descripcion
+                            };
+                            $('#btnSelCombo').removeAttr('disabled');
+                        }).on('check.bs.table', function(e, row) {
+//                            $('#id').attr('value', row.id);
+                            posibleData = {
+                                id: row.id,
+                                nombre: row.nombre,
+                                numeroLavadas: row.lavadas,
+                                descripcion: row.descripcion
+                            };
+//                        $('#btnSelCombo').removeAttr('disabled');
+                            $('#btnSelCombo').removeAttr('disabled')
+                        });
+                    });
+                </script>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                <button type="button" disabled="true" 
-                        id="btnSelCombo" class="btn btn-primary" 
-                        data-dismiss="modal" 
-                        onclick="mostrarEnTablaComboSel(comboSel);">
+                <button type="button" id="btnSelCombo" class="btn btn-primary" 
+                        data-dismiss="modal" disabled="true"
+                        onclick="mostrarEnTablaComboSel(JSON.stringify(posibleData));">
                     Seleccionar
                 </button>
             </div>
@@ -58,7 +83,7 @@
             </div>
             <div class="modal-body">
                 <%--                <script type="text/javascript" src="<c:url value="/resources/js/formularios.js"/>"></script>--%>
-                <script type="text/javascript" src="<c:url value="/resources/js/validador.js"/>"></script>
+                <!--<script type="text/javascript" src="<c:url value="/resources/js/validador.js"/>"></script>-->
                 <spring:url value="/Combo/addcombo.html" var ="actionFormComboAdd"/>
                 <form id="comboAddForm" name="comboAddForm" class="form-horizontal">
                     <input type="hidden" id="idComboAdd" name="id" value="0" />

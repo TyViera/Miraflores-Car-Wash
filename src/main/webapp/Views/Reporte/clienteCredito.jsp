@@ -12,6 +12,7 @@
         <title>Miraflores Car Wash</title>
         <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap-table.css"/>"/>
         <script type="text/javascript" src="<c:url value="/resources/js/bootstrap-table.js"/>"></script>
+        <script type="text/javascript" src="<c:url value="/resources/js/bootstrap-table-translate.js"/>"></script>
 
         <script type="text/javascript" src="<c:url value="/resources/js/Chart.js"/>"></script>
 

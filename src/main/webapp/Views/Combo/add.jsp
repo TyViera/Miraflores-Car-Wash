@@ -18,6 +18,10 @@
 
         <script type="text/javascript" src="<c:url value="/resources/js/validador.js"/>"></script>
 
+        <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap-table.css"/>"/>
+        <script type="text/javascript" src="<c:url value="/resources/js/bootstrap-table.js"/>"></script>
+        <script type="text/javascript" src="<c:url value="/resources/js/bootstrap-table-translate.js"/>"></script>
+
     </head>
     <body>
         <nav>
@@ -47,7 +51,7 @@
                         </form:label>
                         <input type="hidden" id="comboHidden" name="comboHidden" />
                         <div class="col-lg-3 ">
-                            <button type="button" class="btn btn-default" onclick="abrirModalSeleccionarCombo();">Seleccionar</button>
+                            <button id="btnSelComboOpenModal" type="button" class="btn btn-default" onclick="abrirModalSeleccionarCombo();">Seleccionar</button>
                             <button type="button" class="btn btn-default" onclick="abrirModalAddCombo();">Agregar</button>
                             <br/>
                             <br/>
@@ -91,7 +95,7 @@
                         </form:label>
                         <input type="hidden" id="modeloHidden" name="modeloHidden" />
                         <div class="col-lg-3 ">
-                            <button type="button" class="btn btn-default" onclick="abrirModalSeleccionarModelo();">Seleccionar</button>
+                            <button id="btnSelModeloOpenModal" type="button" class="btn btn-default" onclick="abrirModalSeleccionarModelo();">Seleccionar</button>
                             <button type="button" class="btn btn-default" onclick="abrirModalAddModelo();">Agregar</button>
                             <br/>
                             <br/>

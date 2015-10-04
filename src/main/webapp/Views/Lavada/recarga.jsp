@@ -126,7 +126,7 @@
                 <jsp:include page="selComboPorModeloModal.jsp"/>
                 <br/>
             </div>
-            <script>
+            <script> 
                 $('#btnSelCliente').click(function() {
                     mostrarEnTablaCliente(posiblesDatosCliente);
                 });

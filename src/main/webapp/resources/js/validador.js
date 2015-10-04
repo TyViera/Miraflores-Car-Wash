@@ -356,5 +356,27 @@ $(document).ready(function() {
             }
         }
     });
-    console.log(2);
+    $('#recargaForm').bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            idCliente: {
+                validators: {
+                    notEmpty: {
+                        message: 'Seleccione un cliente de la lista'
+                    }
+                }
+            },
+            idCombo: {
+                validators: {
+                    notEmpty: {
+                        message: 'Seleccione un combo de la lista'
+                    }
+                }
+            }
+        }
+    });
 });

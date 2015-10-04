@@ -1,8 +1,4 @@
 --------------------------------------------------------------------------------
-CREATE TRIGGER compra_combo
-    BEFORE INSERT ON "public".clientecombopormodelo
-    FOR EACH ROW EXECUTE PROCEDURE compra_combo_insert();
-
 CREATE OR REPLACE FUNCTION compra_combo_insert() RETURNS TRIGGER 
 AS $BODY$
 DECLARE
@@ -36,12 +32,12 @@ BEGIN
 END;
 $BODY$ LANGUAGE plpgsql;
 
+CREATE TRIGGER compra_combo
+    BEFORE INSERT ON "public".clientecombopormodelo
+    FOR EACH ROW EXECUTE PROCEDURE compra_combo_insert();
+
 
 --------------------------------------------------------------------------------  
-CREATE TRIGGER lavada_tg
-    BEFORE INSERT ON "public".lavada
-    FOR EACH ROW EXECUTE PROCEDURE lavada_insert();
-
 CREATE OR REPLACE FUNCTION lavada_insert() RETURNS TRIGGER 
 AS $BODY$
 DECLARE
@@ -71,4 +67,8 @@ BEGIN
     RETURN NEW;
 END;
 $BODY$ LANGUAGE plpgsql;
+
+CREATE TRIGGER lavada_tg
+    BEFORE INSERT ON "public".lavada
+    FOR EACH ROW EXECUTE PROCEDURE lavada_insert();
 

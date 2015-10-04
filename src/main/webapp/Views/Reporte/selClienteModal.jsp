@@ -2,6 +2,10 @@
 <div id="myModalSelCliente" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Seleccionar Cliente</h4>
+            </div>
             <div class="modal-body">
                 <table id="events-table-selCliente" 
                        data-toggle="table" data-cache="false" 

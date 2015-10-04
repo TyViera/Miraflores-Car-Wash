@@ -398,18 +398,18 @@ function mostrarEnTablaCliente(datos) {
     $('#tablaCliente').html(nuevoHTML);
 }
 
-function enviarFormulariosRecarga(urlBase){
+function enviarFormulariosRecarga(urlBase) {
     var datos;
     var id;
     id = $('#id').val();
     datos = {
         id: id,
         fechaRegistro: new Date(),
-        cliente : {
-            id : $('#idCliente').val()
+        cliente: {
+            id: $('#idCliente').val()
         },
-        combopormodelo : {
-            id : $('#idCombo').val()
+        combopormodelo: {
+            id: $('#idCombo').val()
         }
     };
     console.log(JSON.stringify(datos));
@@ -420,11 +420,18 @@ function enviarFormulariosRecarga(urlBase){
         contentType: 'application/json',
         success: function(data, textStatus, jqXHR) {
             console.log(data);
-            switch (data){
+            switch (data) {
                 case "OK":
+                    $('#textoResultado').html("¡Compra Correcta!");
+                    $('#myModalResult').modal();
+                    setTimeout(function() {
+                        window.location.href = urlBase + "/Lavada/index.html";
+                    }, 1000);
                     break;
                 case "ER":
                 default:
+                    $('#textoResultado').html("¡Ocurrió un error! Por favor intentelo otra vez");
+                    $('#myModalResult').modal();
                     break;
             }
         }

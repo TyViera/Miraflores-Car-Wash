@@ -56,7 +56,16 @@
                         <tr>
                             <td>${lavada.id}</td>
                             <td>${lavada.fechaLavado}</td>
-                            <td>${lavada.estado}</td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${lavada.estado eq 'REA'}">
+                                        Realizado
+                                    </c:when>
+                                    <c:otherwise>
+                                        Pendiente de Entrega
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
                             <td>${lavada.carro.placa}</td>
                             <td>${lavada.carro.modelo.nombre}</td>
                             <td>${lavada.carro.cliente.apellidos} ${lavada.carro.cliente.nombres}</td>

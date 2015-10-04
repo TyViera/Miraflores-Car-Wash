@@ -347,3 +347,86 @@ function sendValId(urlBase) {
         }
     });
 }
+
+function mostrarEnTablaComboPorModelo(datos) {
+    var nuevoHTML;
+    nuevoHTML = "<thead>";
+    nuevoHTML += "  <tr>";
+    nuevoHTML += "      <th>Combo seleccionado</th>";
+    nuevoHTML += "      <th></th>";
+    nuevoHTML += "  </tr>";
+    nuevoHTML += "</thead>";
+    nuevoHTML += "<tr>";
+    nuevoHTML += "  <td>Nombre</td>";
+    nuevoHTML += "  <td>" + datos.nombre + "</td>";
+    nuevoHTML += "</tr>";
+    nuevoHTML += "<tr>";
+    nuevoHTML += "  <td>Modelo</td>";
+    nuevoHTML += "  <td>" + datos.modelo + "</td>";
+    nuevoHTML += "</tr>";
+    nuevoHTML += "<tr>";
+    nuevoHTML += "  <td>Lavadas</td>";
+    nuevoHTML += "  <td>" + datos.lavadas + "</td>";
+    nuevoHTML += "</tr>";
+    nuevoHTML += "<tr>";
+    nuevoHTML += "  <td>Precio</td>";
+    nuevoHTML += "  <td>S/. " + datos.precio + "0</td>";
+    nuevoHTML += "</tr>";
+    $('#tablaCombo').html(nuevoHTML);
+}
+
+function mostrarEnTablaCliente(datos) {
+    var nuevoHTML;
+    nuevoHTML = "<thead>";
+    nuevoHTML += "  <tr>";
+    nuevoHTML += "      <th>Cliente seleccionado</th>";
+    nuevoHTML += "      <th></th>";
+    nuevoHTML += "  </tr>";
+    nuevoHTML += "</thead>";
+    nuevoHTML += "<tr>";
+    nuevoHTML += "  <td>Nombres</td>";
+    nuevoHTML += "  <td>" + datos.nombres + "</td>";
+    nuevoHTML += "</tr>";
+    nuevoHTML += "<tr>";
+    nuevoHTML += "  <td>Apellidos</td>";
+    nuevoHTML += "  <td>" + datos.apellidos + "</td>";
+    nuevoHTML += "</tr>";
+    nuevoHTML += "<tr>";
+    nuevoHTML += "  <td>Dni</td>";
+    nuevoHTML += "  <td>" + datos.dni + "</td>";
+    nuevoHTML += "</tr>";
+    $('#tablaCliente').html(nuevoHTML);
+}
+
+function enviarFormulariosRecarga(urlBase){
+    var datos;
+    var id;
+    id = $('#id').val();
+    datos = {
+        id: id,
+        fechaRegistro: new Date(),
+        cliente : {
+            id : $('#idCliente').val()
+        },
+        combopormodelo : {
+            id : $('#idCombo').val()
+        }
+    };
+    console.log(JSON.stringify(datos));
+    $.ajax({
+        url: urlBase + "/Lavada/recargar.html",
+        type: 'POST',
+        data: JSON.stringify(datos),
+        contentType: 'application/json',
+        success: function(data, textStatus, jqXHR) {
+            console.log(data);
+            switch (data){
+                case "OK":
+                    break;
+                case "ER":
+                default:
+                    break;
+            }
+        }
+    });
+}

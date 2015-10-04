@@ -6,9 +6,13 @@
 package com.miraflorescarwash.controller;
 
 import com.miraflorescarwash.model.Carro;
+import com.miraflorescarwash.model.ClienteComboPorModelo;
 import com.miraflorescarwash.model.Lavada;
 import com.miraflorescarwash.model.LavadaDisponible;
 import com.miraflorescarwash.service.CarroService;
+import com.miraflorescarwash.service.ClienteComboPorModeloService;
+import com.miraflorescarwash.service.ClienteService;
+import com.miraflorescarwash.service.ComboPorModeloService;
 import com.miraflorescarwash.service.LavadaDisponibleService;
 import com.miraflorescarwash.service.LavadaService;
 import java.io.IOException;
@@ -18,7 +22,6 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -43,6 +46,15 @@ public class LavadaController {
     @Autowired
     private CarroService carroService;
 
+    @Autowired
+    private ClienteComboPorModeloService clienteComboPorModeloService;
+
+    @Autowired
+    private ComboPorModeloService comboPorModeloService;
+
+    @Autowired
+    private ClienteService clienteService;
+
     @RequestMapping(value = {"/index.html", "*"}, method = RequestMethod.GET)
     public String doGet(Model model) {
         model.addAttribute("lavadas", lavadaService.findAll());
@@ -56,7 +68,7 @@ public class LavadaController {
     }
 
     @RequestMapping(value = "/view.html", method = RequestMethod.GET)
-    public String doGetView(Model model, @RequestParam(value = "id")Long id, final RedirectAttributes redirectAttributes) {
+    public String doGetView(Model model, @RequestParam(value = "id") Long id, final RedirectAttributes redirectAttributes) {
         Lavada l;
         l = lavadaService.findById(id);
         if (l == null) {
@@ -68,13 +80,37 @@ public class LavadaController {
         model.addAttribute("lavada", l);
         return "/Lavada/mostrar";
     }
-    
-    @RequestMapping(value = "/pendientes.html", method = RequestMethod.GET) 
-    public String doGetPendientes(Model model){
+
+    @RequestMapping(value = "/pendientes.html", method = RequestMethod.GET)
+    public String doGetPendientes(Model model) {
         model.addAttribute("lavadas", lavadaService.verLavadasPendientes());
         return "/Lavada/pendiente";
     }
-    
+
+    @RequestMapping(value = "/recargar.html", method = RequestMethod.GET)
+    public String doGetRecargar(Model model) {
+        model.addAttribute("recargaForm", new ClienteComboPorModelo());
+        model.addAttribute("combos", comboPorModeloService.findAll());
+        model.addAttribute("clientes", clienteService.findAll());
+        return "/Lavada/recarga";
+    }
+
+    @RequestMapping(value = "/recargar.html", method = RequestMethod.POST)
+    public @ResponseBody 
+        String doPostRecargar(Model model, @RequestBody String json) {
+            ClienteComboPorModelo compra;
+        try {
+            System.out.println("recbo la cadena: " + json);
+            compra = new ObjectMapper().readValue(json, ClienteComboPorModelo.class);
+            System.out.println("Se convierte: " + compra);
+            clienteComboPorModeloService.save(compra);
+            return "OK";
+        } catch (IOException ex) {
+            Logger.getLogger(LavadaController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "ER";
+    }
+
     @RequestMapping(value = "/add.html", method = RequestMethod.POST)
     public @ResponseBody
     String doPostAdd(@RequestBody String json) {
@@ -93,7 +129,7 @@ public class LavadaController {
                 lavada = new ObjectMapper().readValue(json, Lavada.class);
 
                 System.out.println("Se convierte en: \n" + lavada);
-                
+
                 aux = new LavadaDisponible();
                 carro = carroService.findById(lavada.getCarro().getId());
 
@@ -135,17 +171,19 @@ public class LavadaController {
     }
 
     @RequestMapping(value = "/objeto.html", method = RequestMethod.POST)
-    public @ResponseBody String doPostObj(@RequestBody String json){
+    public @ResponseBody
+    String doPostObj(@RequestBody String json) {
         return "";
     }
-    
+
     @RequestMapping(value = "/marcarRealizada.html", method = RequestMethod.POST)
-    public @ResponseBody String doPostMarcarRealizada(@RequestBody String json){
+    public @ResponseBody
+    String doPostMarcarRealizada(@RequestBody String json) {
         Lavada aux, lavada;
         try {
             aux = new ObjectMapper().readValue(json, Lavada.class);
             lavada = lavadaService.findById(aux.getId());
-            if(lavada != null){
+            if (lavada != null) {
                 lavada.setEstado(Constantes.LAVADA_REALIZADA);
                 lavadaService.update(lavada);
                 return "OK";
@@ -155,5 +193,5 @@ public class LavadaController {
         }
         return "ER";
     }
-    
+
 }

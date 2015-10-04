@@ -74,4 +74,9 @@ public class ClienteComboPorModelo implements Serializable {
         this.combopormodelo = combopormodelo;
     }
 
+    @Override
+    public String toString() {
+        return "ClienteComboPorModelo{" + "id=" + id + ", fechaRegistro=" + fechaRegistro + ", cliente=" + cliente + ", combopormodelo=" + combopormodelo + '}';
+    }
+    
 }

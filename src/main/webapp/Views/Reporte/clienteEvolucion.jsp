@@ -42,11 +42,11 @@
                 <form action="${url}" method="POST" id="formSelClienteEvo" name="formSelClienteEvo" class="form-inline">
                     <div class="form-group has-feedback" id="divError">
                         <input type="hidden" name="tipo" value="evo"/>
-                        <input type="hidden" id="id" name="id"/>
+                        <input type="hidden" id="idCliente" name="id"/>
                         <label id="clienteSel" class="control-label" >Cliente Seleccionado: </label>
                         <input id="txtCliente" class="form-control" type="text" name="txtCliente" readonly="true" placeholder="Cliente a Buscar" />
                         <button type="button" class="btn btn-default" 
-                                onclick="$('#myModal').modal(); 
+                                onclick="$('#myModalSelCliente').modal(); 
                                     $('#enviarForm').removeAttr('disabled');
                                     $('#divError').removeClass('has-error'); 
                                     $('#txtCliente').data('bootstrapValidator.error').html('').hide()">
@@ -57,75 +57,7 @@
                         </button>
                     </div>
                 </form>
-                <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-body">
-                                <table id="events-table" 
-                                       data-toggle="table" data-cache="false" 
-                                       data-height="299" data-click-to-select="true" 
-                                       data-show-refresh="true" data-show-toggle="true"
-                                       data-show-columns="true" data-search="true" 
-                                       data-select-item-name="toolbar1"
-                                       data-select-item-name="radioName">
-                                    <thead>
-                                        <tr>
-                                            <th data-field="state" data-radio="true"></th>
-                                            <th data-field="id">Id</th>
-                                            <th data-field="nombres">Nombres</th>
-                                            <th data-field="apellidos">Apellidos</th>
-                                            <th data-field="dni">Dni</th>
-                                            <th data-field="telefono">Telefono</th>
-                                        </tr>
-                                    </thead>
-                                    <c:forEach items="${clientes}" var="cli">
-                                        <tr>
-                                            <td></td>
-                                            <td>${cli.id}</td>
-                                            <td>${cli.nombres}</td>
-                                            <td>${cli.apellidos}</td>
-                                            <td>${cli.dni}</td>
-                                            <td>${cli.telefono}</td>
-                                        </tr>
-                                    </c:forEach>
-                                </table>
-                                <script>
-                                    var posibleData;
-                                    posibleData = '';
-                                    $(function() {
-                                        $('#txtCliente').next().click(function() {
-                                            var $result = $('#events-result');
-                                            $('#events-table').bootstrapTable({
-                                            }).on('dbl-click-row.bs.table', function(e, row, $element) {
-                                                $('#id').attr('value', row.id);
-                                                posibleData = row.apellidos + ', ' + row.nombres;
-                                                $('#btnSelModelo').attr('disabled', false);
-                                            }).on('check.bs.table', function(e, row) {
-                                                $('#id').attr('value', row.id);
-                                                posibleData = row.apellidos + ', ' + row.nombres;
-                                                $('#btnSelModelo').attr('disabled', false);
-                                            });
-                                        });
-                                    });
-                                </script>
-                            </div>
-                            <br/>
-                            <br/>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" 
-                                        data-dismiss="modal">
-                                    Cerrar
-                                </button>
-                                <button type="button" disabled="true" 
-                                        id="btnSelModelo" class="btn btn-primary" 
-                                        data-dismiss="modal"
-                                        onclick="$('#txtCliente').attr('value',posibleData);">
-                                    Seleccionar
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <jsp:include page="selClienteModal.jsp"/>
                 <hr/>
                 <c:if test="${not empty clientesReporte}">
                     <div class="container">

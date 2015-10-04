@@ -103,4 +103,9 @@ public class ComboPorModelo implements Serializable {
         this.modelo = modelo;
     }
 
+    @Override
+    public String toString() {
+        return "ComboPorModelo{" + "id=" + id + ", precio=" + precio + ", combo=" + combo + ", modelo=" + modelo + '}';
+    }
+
 }

@@ -12,7 +12,7 @@ import org.apache.commons.httpclient.NameValuePair;
 
 /**
  *
- * @author ty
+ * @author Kevin
  */
 public class TestSMS {
 

@@ -16,7 +16,7 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 /**
  *
- * @author ty
+ * @author Kevin
  */
 @Configuration
 @ComponentScan(basePackages = {

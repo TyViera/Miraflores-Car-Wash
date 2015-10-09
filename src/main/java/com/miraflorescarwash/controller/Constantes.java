@@ -8,7 +8,7 @@ package com.miraflorescarwash.controller;
 
 /**
  *
- * @author ty
+ * @author Kevin
  */
 public class Constantes {
     

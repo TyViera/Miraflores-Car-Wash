@@ -20,7 +20,7 @@ import javax.validation.constraints.Min;
 
 /**
  *
- * @author ty
+ * @author Kevin
  */
 @Entity
 public class ObjetoCustodia implements Serializable{

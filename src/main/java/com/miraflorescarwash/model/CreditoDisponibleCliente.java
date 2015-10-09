@@ -8,7 +8,7 @@ package com.miraflorescarwash.model;
 
 /**
  *
- * @author ty
+ * @author Kevin
  */
 public class CreditoDisponibleCliente {
     

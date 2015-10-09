@@ -12,7 +12,7 @@ import org.jfree.chart.JFreeChart;
 
 /**
  *
- * @author ty
+ * @author Kevin
  */
 public interface LavadaService {
 

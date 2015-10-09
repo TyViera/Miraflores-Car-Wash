@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author ty
+ * @author Kevin
  */
 public class ComboReporte implements Serializable {
     

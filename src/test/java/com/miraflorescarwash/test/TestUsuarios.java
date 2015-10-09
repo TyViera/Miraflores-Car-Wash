@@ -25,7 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
- * @author ty
+ * @author Kevin
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration

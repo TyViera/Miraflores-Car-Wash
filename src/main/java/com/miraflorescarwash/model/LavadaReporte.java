@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author ty
+ * @author Kevin
  */
 public class LavadaReporte implements Serializable {
 

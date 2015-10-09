@@ -18,7 +18,7 @@ import javax.persistence.ManyToOne;
 
 /**
  *
- * @author ty
+ * @author Kevin
  */
 @Entity
 public class UsuarioRol implements Serializable {

@@ -12,7 +12,7 @@
         <title>Miraflores Car Wash</title>
     </head>
     <body>
-        <nav>
+        <nav> 
             <jsp:include page="/templates/menu.jsp"/>
             <jsp:include page="/templates/banner.jsp"/>
         </nav>

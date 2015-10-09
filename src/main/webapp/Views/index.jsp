@@ -4,7 +4,7 @@
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <jsp:useBean id="usuario" scope="session" class="com.miraflorescarwash.model.Usuario"  />
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">

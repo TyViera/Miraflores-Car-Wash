@@ -8,6 +8,7 @@ package com.miraflorescarwash.service;
 import com.miraflorescarwash.model.Combo;
 import com.miraflorescarwash.model.ComboReporte;
 import java.util.List;
+import org.jfree.chart.JFreeChart;
 
 /**
  *
@@ -26,4 +27,6 @@ public interface ComboService {
     public void delete(Long id);
 
     public List<ComboReporte> ComboReporte();
+    
+    public JFreeChart generarChartReporte(List<ComboReporte> lista);
 }

@@ -17,6 +17,9 @@
         <link rel="stylesheet" href="<c:url value="/resources/css/bootstrapValidator.min.css" />" />
         <script type="text/javascript" src="<c:url value="/resources/js/bootstrapValidator.min.js" />" ></script>
         <script type="text/javascript" src="<c:url value="/resources/js/validador.js"/>"></script>
+
+        <!-- To PDF -->
+        <script type="text/javascript" src="<c:url value="/resources/js/pdf/basic.js"/>"></script>
     </head>
     <body>
         <nav>
@@ -78,6 +81,10 @@
                     }
                 </script>
                 <div class="container">
+                    <button class="btn btn-danger"
+                            onclick="exportPDFReporteCombos('${pageContext.servletContext.contextPath}');">
+                        Exportar a PDF
+                    </button>
                     <table width="100%">
                         <tr>
                             <td width="70%">
@@ -105,7 +112,7 @@
                                                     var porc;
                                                     porc = ${cb.cantidad} /<%=total%>;
                                                     porc = Math.round(porc * 10000) / 10000;
-                                                    porc = porc*100;
+                                                    porc = porc * 100;
                                                     document.write(porc + "%");
                                                 </script>
                                             </td>
@@ -113,13 +120,13 @@
                                                 <canvas
                                                     id="cv_${cb.id}" style="max-height: 50px;"></canvas>
                                                 <script>
-                                                var a = data1[<%=i%>].color;
-                                                var cuad;
-                                                cuad = 50;
-                                                var miDibujo = $('#cv_${cb.id}').get(0).getContext("2d");
-                                                miDibujo.rect(cuad, cuad, cuad, cuad);
-                                                miDibujo.fillStyle = a;
-                                                miDibujo.fill();
+                                                    var a = data1[<%=i%>].color;
+                                                    var cuad;
+                                                    cuad = 50;
+                                                    var miDibujo = $('#cv_${cb.id}').get(0).getContext("2d");
+                                                    miDibujo.rect(cuad, cuad, cuad, cuad);
+                                                    miDibujo.fillStyle = a;
+                                                    miDibujo.fill();
                                                 </script>
                                             </td>
                                         </tr>

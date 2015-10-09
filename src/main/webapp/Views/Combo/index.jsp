@@ -10,6 +10,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <jsp:include page="/templates/head.jsp"/>
         <title>Miraflores Car Wash</title>
+        <!-- To PDF -->
+        <script type="text/javascript" src="<c:url value="/resources/js/pdf/basic.js"/>"></script>
     </head>
     <body>
         <nav>
@@ -28,9 +30,12 @@
                     </div>
                 </c:if>
                 <h1>Todas los Combos</h1>
-                <div class="col-lg-offset-10" >
+                <div class="col-lg-offset-9" >
                     <spring:url value="/Combo/add.html" var="comboAddUrl" />
                     <button class="btn btn-default" onclick="location.href = '${comboAddUrl}'">Agregar Nuevo</button>
+                    <button class="btn btn-danger" onclick="exportPDFCombos('${pageContext.servletContext.contextPath}')">
+                        Exportar a PDF
+                    </button>
                 </div>
                 <table class="table table-striped">
                     <thead>

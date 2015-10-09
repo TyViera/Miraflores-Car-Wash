@@ -50,7 +50,7 @@ $BODY$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION ventas_combos() RETURNS SETOF combo_reporte
 AS $BODY$
 BEGIN
-    RETURN QUERY SELECT c.id,c.nombre, SUM(cpm.precio) 
+    RETURN QUERY SELECT c.id,c.nombre, CAST(SUM(cpm.precio) AS NUMERIC)
             FROM combo c
             INNER JOIN combopormodelo cpm ON cpm.comboid=c.id
             INNER JOIN clientecombopormodelo cli ON cpm.id=cli.combopormodeloid
@@ -68,7 +68,7 @@ $BODY$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION ventas_clientes() RETURNS SETOF cliente_reporte
 AS $BODY$
 BEGIN
-    RETURN QUERY SELECT c.id,c.nombres,c.apellidos, SUM(cpm.precio) 
+    RETURN QUERY SELECT c.id,c.nombres,c.apellidos, CAST (SUM(cpm.precio) AS NUMERIC)
             FROM cliente c
             INNER JOIN clientecombopormodelo cli ON c.id=cli.clienteid
             INNER JOIN combopormodelo cpm ON cli.combopormodeloid=cpm.id
@@ -83,7 +83,7 @@ END;
 $BODY$ LANGUAGE plpgsql;
 
 -- Dinero recaudado por cada Cliente Este mes--
-select * from ventas_clientes_mes();
+-- select * from ventas_clientes_mes();
 CREATE OR REPLACE FUNCTION ventas_clientes_mes() RETURNS SETOF cliente_reporte
 AS $BODY$
 DECLARE
@@ -93,7 +93,7 @@ BEGIN
     f_min := CAST( date_trunc('month',current_date) AS DATE);
     f_max := CAST( date_trunc('month', 
             (CAST(current_date AS DATE) + CAST('1 month' AS INTERVAL))) AS DATE);
-    RETURN QUERY SELECT c.id,c.nombres,c.apellidos, SUM(cpm.precio) 
+    RETURN QUERY SELECT c.id,c.nombres,c.apellidos, CAST (SUM(cpm.precio) AS NUMERIC) 
             FROM cliente c
             INNER JOIN clientecombopormodelo cli ON c.id=cli.clienteid
             INNER JOIN combopormodelo cpm ON cli.combopormodeloid=cpm.id
@@ -129,7 +129,7 @@ BEGIN
 END;
 $BODY$ LANGUAGE plpgsql;
 
-select * from ventas_cliente_por_mes(1);
+-- select * from ventas_cliente_por_mes(1);
 CREATE OR REPLACE FUNCTION ventas_cliente_por_mes(idCliente BIGINT) RETURNS SETOF cliente_reporte
 AS $BODY$
 DECLARE
@@ -256,7 +256,7 @@ END;
 $BODY$ LANGUAGE plpgsql;
 
 --
-select * from credito_cliente(2);
+-- select * from credito_cliente(2);
 CREATE OR REPLACE FUNCTION credito_cliente(idCliente BIGINT) RETURNS SETOF credito
 AS $BODY$
 DECLARE

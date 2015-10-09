@@ -7,8 +7,10 @@ package com.miraflorescarwash.service;
 
 import com.miraflorescarwash.model.Cliente;
 import com.miraflorescarwash.model.ClienteReporte;
+import com.miraflorescarwash.model.ComboReporte;
 import com.miraflorescarwash.model.CreditoDisponibleCliente;
 import java.util.List;
+import org.jfree.chart.JFreeChart;
 
 /**
  *
@@ -36,4 +38,7 @@ public interface ClienteService {
     
     public List<CreditoDisponibleCliente> verCreditoDisponible(Long idCliente);
     
+    public JFreeChart generarChartReporte(List<ClienteReporte> lista);
+    
+    public JFreeChart generarChartReporteMes(List<ClienteReporte> lista);
 }

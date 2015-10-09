@@ -7,17 +7,14 @@ package com.miraflorescarwash.controller;
 
 import com.miraflorescarwash.model.ClienteReporte;
 import com.miraflorescarwash.model.CreditoDisponibleCliente;
-import com.miraflorescarwash.model.LavadaReporte;
 import com.miraflorescarwash.service.ClienteService;
 import com.miraflorescarwash.service.ComboService;
+import com.miraflorescarwash.service.ExtraService;
 import com.miraflorescarwash.service.LavadaService;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,11 +35,11 @@ public class ReporteController {
 
     @Autowired
     private ClienteService clienteService;
-    
+
     @Autowired
     private ComboService comboService;
 
-    @RequestMapping(value = {"/index.html","*"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/index.html", "*"}, method = RequestMethod.GET)
     public String index() {
         return "/Reporte/index";
     }
@@ -62,22 +59,22 @@ public class ReporteController {
             case "dia":
                 me = Constantes.REPORTE_LAVADA_DIARIO;
                 ti = "Día";
-                fechas = this.obtenerUltimosNDias(n);
-                listaEtiquetas = this.formatearFechas(fechas, "dd 'de' MMM");
+                fechas = ExtraService.obtenerUltimosNDias(n);
+                listaEtiquetas = ExtraService.formatearFechas(fechas, "dd 'de' MMM");
                 format = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy");
                 break;
             case "sem":
                 me = Constantes.REPORTE_LAVADA_SEMANAL;
                 ti = "Semana";
-                fechas = this.obtenerUltimosNSemanas(n);
-                listaEtiquetas = this.formatearFechas(fechas, "dd 'de' MMM");
+                fechas = ExtraService.obtenerUltimosNSemanas(n);
+                listaEtiquetas = ExtraService.formatearFechas(fechas, "dd 'de' MMM");
                 format = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy");
                 break;
             case "mes":
                 me = Constantes.REPORTE_LAVADA_MENSUAL;
                 ti = "Mes";
-                fechas = this.obtenerUltimosNMeses(n);
-                listaEtiquetas = this.formatearFechas(fechas, "MMM 'de' yyyy");
+                fechas = ExtraService.obtenerUltimosNMeses(n);
+                listaEtiquetas = ExtraService.formatearFechas(fechas, "MMM 'de' yyyy");
                 format = new SimpleDateFormat("MMMM 'de' yyyy");
                 break;
             default:
@@ -148,9 +145,9 @@ public class ReporteController {
         switch (tipo) {
             case "evo":
                 reporteCompras = clienteService.reporteComprasPorMesPorCliente(id);
-                fechas = this.obtenerUltimosNMeses(n);
+                fechas = ExtraService.obtenerUltimosNMeses(n);
                 Collections.reverse(reporteCompras);
-                etiquetas = this.formatearFechas(fechas, "MMM 'de' yyyy");
+                etiquetas = ExtraService.formatearFechas(fechas, "MMM 'de' yyyy");
                 model.addAttribute("clientesReporte", reporteCompras);
                 model.addAttribute("etiquetas", etiquetas);
                 model.addAttribute("clientes", clienteService.findAll());
@@ -169,65 +166,9 @@ public class ReporteController {
     }
 
     @RequestMapping(value = "/combos.html", method = RequestMethod.GET)
-    public String doGetCombos(Model model){
+    public String doGetCombos(Model model) {
         model.addAttribute("combosReporte", comboService.ComboReporte());
         return "/Reporte/combo";
     }
-    
-    public List<Date> obtenerUltimosNDias(int n) {
-        Calendar c;
-        List<Date> lista;
 
-        lista = new ArrayList<>();
-        c = Calendar.getInstance();
-        c.set(Calendar.DATE, c.get(Calendar.DATE) + 1);
-        for (int i = 0; i <= n; i++) {
-            lista.add(c.getTime());
-            c.set(Calendar.DATE, c.get(Calendar.DATE) - 1);
-        }
-        Collections.reverse(lista);
-        return lista;
-    }
-
-    public List<Date> obtenerUltimosNSemanas(int n) {
-        Calendar c;
-        List<Date> lista;
-
-        lista = new ArrayList<>();
-        c = Calendar.getInstance();
-        c.set(Calendar.DATE, c.get(Calendar.DATE) + 7);
-        for (int i = 0; i <= n; i++) {
-            lista.add(c.getTime());
-            c.set(Calendar.DATE, c.get(Calendar.DATE) - 7);
-        }
-        Collections.reverse(lista);
-        return lista;
-    }
-
-    public List<Date> obtenerUltimosNMeses(int n) {
-        Calendar c;
-        List<Date> lista;
-
-        lista = new ArrayList<>();
-        c = Calendar.getInstance();
-        c.set(Calendar.MONTH, c.get(Calendar.MONTH) + 1);
-        for (int i = 0; i <= n; i++) {
-            lista.add(c.getTime());
-            c.set(Calendar.MONTH, c.get(Calendar.MONTH) - 1);
-        }
-        Collections.reverse(lista);
-        return lista;
-    }
-
-    public List<String> formatearFechas(List<Date> fechas, String format) {
-        List<String> lista;
-        SimpleDateFormat formateador;
-        lista = new ArrayList<>();
-        formateador = new SimpleDateFormat(format, Locale.getDefault());
-        for (Date fecha : fechas) {
-            lista.add(formateador.format(fecha));
-        }
-        return lista;
-    }
 }
- 

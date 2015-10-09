@@ -18,6 +18,8 @@
         <link rel="stylesheet" href="<c:url value="/resources/css/bootstrapValidator.min.css" />" />
         <script type="text/javascript" src="<c:url value="/resources/js/bootstrapValidator.min.js" />" ></script>
         <script type="text/javascript" src="<c:url value="/resources/js/validador.js"/>"></script>
+        <!--To PDF-->
+        <script type="text/javascript" src="<c:url value="/resources/js/pdf/basic.js"/>"></script>
     </head>
     <body>
         <nav>
@@ -62,6 +64,12 @@
                 <c:if test="${not empty clientesReporte}">
                     <div class="container">
                         <h4>Cliente: ${clientesReporte.get(0).apellido}, ${clientesReporte.get(0).nombre}</h4>
+                        <button class="btn btn-danger" 
+                                onclick="exportPDFReporteClienteEvo(
+                                            '${pageContext.servletContext.contextPath}',
+                                            '${clientesReporte.get(0).id}')">
+                            Generar PDF
+                        </button>
                     </div>
                 </c:if>
                 <canvas id="myChart" width="1000" height="300">

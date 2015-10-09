@@ -5,8 +5,10 @@
  */
 package com.miraflorescarwash.service;
 
+import com.miraflorescarwash.model.ComboReporte;
 import com.miraflorescarwash.model.Lavada;
 import java.util.List;
+import org.jfree.chart.JFreeChart;
 
 /**
  *
@@ -29,5 +31,7 @@ public interface LavadaService {
     public List<Lavada> verLavadasPendientes();
     
     public void iniciarRelacionesLazy(Lavada lavada);
+    
+    public JFreeChart generarChartReporteVentas(int tipo, int cantidadRegistros);
     
 }

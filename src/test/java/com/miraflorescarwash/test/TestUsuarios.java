@@ -40,7 +40,7 @@ public class TestUsuarios {
 
     @Test
     @Transactional
-//    @Ignore
+    @Ignore
     public void listarUsuarios() {
         int n;
         System.out.println("----- INICIO DEL TEST ------");

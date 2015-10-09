@@ -9,6 +9,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <jsp:include page="/templates/head.jsp"/>
         <title>Miraflores Car Wash</title>
+        <!-- To PDF -->
+        <script type="text/javascript" src="<c:url value="/resources/js/pdf/basic.js"/>"></script>
     </head>
     <body>
         <nav>
@@ -26,21 +28,27 @@
                     etiquetas:
                             [<c:forEach items="${clientes}" var="cli">"${cli.id}",</c:forEach>]
                 };
-                console.log(JSON.stringify(datosGrafico));
+//                console.log(JSON.stringify(datosGrafico));
                 </script>
                 <div class="container">
                     <h1>${mensaje}</h1>
-                    <table width="100%">
-                        <tr>
-                            <td width="50%">
-                                <table class="table table-hover" height="300">
-                                    <thead>
-                                        <tr>
-                                            <th>Id</th>
-                                            <th>Nombre</th>
-                                            <th>Dinero</th>
-                                        </tr>
-                                    </thead>
+                <c:if test="${mensaje eq 'Clientes frecuentes'}" >
+                    <button class="btn btn-danger" 
+                            onclick="exportPDFReporteClientesFreq('${pageContext.servletContext.contextPath}');">
+                        Exportar a PDF
+                    </button>
+                </c:if>
+                <table width="100%">
+                    <tr>
+                        <td width="50%">
+                            <table class="table table-hover" height="300">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Nombre</th>
+                                        <th>Dinero</th>
+                                    </tr>
+                                </thead>
                                 <c:forEach items="${clientes}" var="cli" >
                                     <tr>
                                         <td>${cli.id}</td>
@@ -51,7 +59,7 @@
                             </table>
                         </td>
                         <td width="10%">
-                            
+
                         </td>
                         <td width="40%">
                             <canvas id="myChart" height="300" width="${clientes.size()*50}">

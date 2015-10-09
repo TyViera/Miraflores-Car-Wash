@@ -19,6 +19,9 @@
         <link rel="stylesheet" href="<c:url value="/resources/css/bootstrapValidator.min.css" />" />
         <script type="text/javascript" src="<c:url value="/resources/js/bootstrapValidator.min.js" />" ></script>
         <script type="text/javascript" src="<c:url value="/resources/js/validador.js"/>"></script>
+        
+        <!-- To PDF -->
+        <script type="text/javascript" src="<c:url value="/resources/js/pdf/basic.js"/>"></script>
     </head>
     <body>
         <nav>
@@ -59,6 +62,10 @@
                     <c:otherwise>
                         <c:choose>
                             <c:when test="${credito.size() != 0}">
+                                <button class="btn btn-danger" 
+                                        onclick="exportPDFCreditoCliente('${pageContext.servletContext.contextPath}',${credito.get(0).id})">
+                                    Exportar a PDF
+                                </button>
                                 <form class="form-horizontal" role="form">
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label">Nombres</label>

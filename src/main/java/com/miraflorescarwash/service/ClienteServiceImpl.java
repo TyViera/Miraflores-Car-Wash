@@ -9,7 +9,22 @@ import com.miraflorescarwash.dao.ClienteDAO;
 import com.miraflorescarwash.model.Cliente;
 import com.miraflorescarwash.model.ClienteReporte;
 import com.miraflorescarwash.model.CreditoDisponibleCliente;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.DateAxis;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYItemRenderer;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.time.Month;
+import org.jfree.data.time.TimeSeries;
+import org.jfree.data.time.TimeSeriesCollection;
+import org.jfree.data.xy.XYDataset;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -39,7 +54,7 @@ public class ClienteServiceImpl implements ClienteService {
     public void iniciarRelacionesLazy(Cliente cliente) {
         clienteDAO.iniciarRelacionesLazy(cliente);
     }
-    
+
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void save(Cliente cliente) {
@@ -52,7 +67,6 @@ public class ClienteServiceImpl implements ClienteService {
         clienteDAO.update(cliente);
     }
 
-    
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void delete(Long id) {
@@ -67,19 +81,73 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     @Transactional
-    public List<ClienteReporte> reporteComprasEsteMes(){
+    public List<ClienteReporte> reporteComprasEsteMes() {
         return clienteDAO.reporteComprasEsteMes();
     }
-    
+
     @Override
     @Transactional
-    public List<ClienteReporte> reporteComprasPorMesPorCliente(Long idCliente){
+    public List<ClienteReporte> reporteComprasPorMesPorCliente(Long idCliente) {
         return clienteDAO.reporteComprasPorMesPorCliente(idCliente);
     }
-    
+
     @Override
     @Transactional
-    public List<CreditoDisponibleCliente> verCreditoDisponible(Long idCliente){
+    public List<CreditoDisponibleCliente> verCreditoDisponible(Long idCliente) {
         return clienteDAO.verCreditoDisponible(idCliente);
     }
+
+    @Override
+    public JFreeChart generarChartReporte(List<ClienteReporte> lista) {
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        for (ClienteReporte clienteReporte : lista) {
+            dataset.setValue(clienteReporte.getTotal(), "H", clienteReporte.getId());
+        }
+        return ChartFactory.createBarChart("Clientes Frecuentes",
+                "Clientes", "Dinero Recaudado", dataset,
+                PlotOrientation.VERTICAL, false, true, false);
+    }
+
+    @Override
+    public JFreeChart generarChartReporteMes(List<ClienteReporte> lista) {
+        TimeSeriesCollection localTimeSeriesCollection;
+        TimeSeries serie1;
+        Date fecha;
+        Calendar c;
+        Object localObject;
+        JFreeChart localJFreeChart;
+        XYPlot localXYPlot;
+        XYItemRenderer localXYItemRenderer;
+        int val;
+
+        serie1 = new TimeSeries("Ventas", Month.class);
+        c = Calendar.getInstance();
+        fecha = c.getTime();
+        for (ClienteReporte clienteReporte : lista) {
+            serie1.add(new Month(fecha), clienteReporte.getTotal());
+            c.setTime(fecha);
+            val = c.get(Calendar.MONTH);
+            val = val - 1;
+            c.set(Calendar.MONTH, val);
+            fecha = c.getTime();
+        }
+        
+        localTimeSeriesCollection = new TimeSeriesCollection();
+        localTimeSeriesCollection.addSeries(serie1);
+        
+        localJFreeChart = ChartFactory.createTimeSeriesChart("Evolución de cliente",
+                "Tiempo", "Dinero Recaudado", localTimeSeriesCollection, false, true, false);
+        localXYPlot = (XYPlot) localJFreeChart.getPlot();
+        localXYPlot.setDomainCrosshairVisible(true);
+        localXYPlot.setRangeCrosshairVisible(true);
+        localXYItemRenderer = localXYPlot.getRenderer();
+        if ((localXYItemRenderer instanceof XYLineAndShapeRenderer)) {
+            localObject = (XYLineAndShapeRenderer) localXYItemRenderer;
+            ((XYLineAndShapeRenderer) localObject).setBaseShapesVisible(false);
+        }
+        localObject = (DateAxis) localXYPlot.getDomainAxis();
+        ((DateAxis) localObject).setDateFormatOverride(new SimpleDateFormat("MMM-yyyy"));
+        return localJFreeChart;
+    }
+
 }

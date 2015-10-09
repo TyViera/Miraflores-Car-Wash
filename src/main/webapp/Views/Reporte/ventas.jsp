@@ -8,6 +8,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <jsp:include page="/templates/head.jsp"/>
         <title>Miraflores Car Wash</title>
+        <!-- To PDF -->
+        <script type="text/javascript" src="<c:url value="/resources/js/pdf/basic.js"/>"></script>
     </head>
     <body>
         <nav>
@@ -25,24 +27,31 @@
                     etiquetas:
                             [<c:forEach items="${etiq}" var="et">"${et}",</c:forEach>]
                 };
-                console.log(JSON.stringify(datosGrafico));
+//                console.log(JSON.stringify(datosGrafico));
                 </script>
-                <%
-                    double total;
-                    java.util.List<Double> lista;
-                    
-                    lista = (java.util.List)request.getAttribute("data");
-                    total = 0;
-                    for(Double r : lista){
-                        total += r;
-                    }
-                %>
-                <div class="container">
-                    <h1>Ventas por ${tiempo}</h1>
+            <%
+                double total;
+                java.util.List<Double> lista;
+
+                lista = (java.util.List) request.getAttribute("data");
+                total = 0;
+                for (Double r : lista) {
+                    total += r;
+                }
+            %>
+            <div class="container">
+                <h1>Ventas por ${tiempo}</h1>
                 <div class="container">
                     <h4><b>Inicio:</b> ${tiempoInicio}</h4>
                     <h4><b>Fin:</b> ${tiempoFin}</h4>
                     <h4><b>Total Recaudado:</b> S/. <%=total%>0</h4>
+                    <button class="btn btn-danger" 
+                            onclick=" var str = '${tiempo}';
+                                exportPDFReporteVentas(
+                                        '${pageContext.servletContext.contextPath}', 
+                                        str.substring(0,1).toLowerCase());">
+                        Exportar a Pdf
+                    </button>
                 </div>
                 <canvas id="myChart" class="center-block" width="1000" height="400">
 

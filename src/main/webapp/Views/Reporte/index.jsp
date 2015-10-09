@@ -40,8 +40,7 @@
                             </p>
                             <spring:url value="/Reporte/ventas.html?tiempo=dia" var="url" />
                             <button type="button" class="btn btn-default"
-                                    onclick="location.hre f = '${url}'
-                                                    ;">
+                                    onclick="location.href = '${url}';">
                                 Ir a Ventas
                             </button>
                         </div>

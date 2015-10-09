@@ -18,8 +18,26 @@
         </nav>
         <section>
             <jsp:include page="/templates/header.jsp"/>
-            <div>
-                Imagenes y mas imagenes
+            <div class="container">
+                <hr/>
+                <div class="row">
+                    <div class="col-lg-6" >
+                        <h1>¿Realizar una lavada?</h1>
+                        <h3>Realizala <a href="${pageContext.servletContext.contextPath}/Lavada/add.html">Aquí</a></h3>
+                        <a href="${pageContext.servletContext.contextPath}/Lavada/add.html">
+                            <img src="<c:url value="/resources/img/lavada.gif"/>" alt="Lavada"/>
+                        </a>
+                    </div>
+                    <div class="col-lg-6">
+                        <h1>¿Necesitas Crédito?</h1>
+                        <h3>Recargalo <a href="${pageContext.servletContext.contextPath}/Lavada/recargar.html">Aquí</a></h3>
+                        <a href="${pageContext.servletContext.contextPath}/Lavada/recargar.html">
+                            <img src="<c:url value="/resources/img/credito.jpg"/>" alt="credito"/>
+                        </a>
+                        
+                    </div>
+                </div>
+                <hr/>
             </div>
         </section>
         <footer>

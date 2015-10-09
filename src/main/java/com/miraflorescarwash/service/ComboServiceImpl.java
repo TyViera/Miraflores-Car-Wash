@@ -7,7 +7,11 @@ package com.miraflorescarwash.service;
 
 import com.miraflorescarwash.dao.ComboDAO;
 import com.miraflorescarwash.model.Combo;
+import com.miraflorescarwash.model.ComboReporte;
 import java.util.List;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.general.DefaultPieDataset;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -54,6 +58,16 @@ public class ComboServiceImpl implements ComboService {
     @Transactional
     public List<com.miraflorescarwash.model.ComboReporte> ComboReporte() {
         return comboDAO.ComboReporte();
+    }
+
+    @Override
+    public JFreeChart generarChartReporte(List<com.miraflorescarwash.model.ComboReporte> lista) {
+        DefaultPieDataset dataset = new DefaultPieDataset();
+        for (ComboReporte comboReporte : lista) {
+            dataset.setValue(comboReporte.getNombre(), comboReporte.getCantidad());
+        }
+        return ChartFactory.createPieChart("Reporte de Combos",
+                dataset, true, true, false);
     }
 
 }

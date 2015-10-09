@@ -14,6 +14,9 @@
         <script type="text/javascript" src="<c:url value="/resources/js/bootstrap-table.js"/>"></script>
         <script type="text/javascript" src="<c:url value="/resources/js/bootstrap-table-translate.js"/>"></script>
         <script type="text/javascript" src="<c:url value="/resources/js/formularios.js"/>"></script>
+        
+        <!-- To PDF -->
+        <script type="text/javascript" src="<c:url value="/resources/js/pdf/basic.js"/>"></script>
     </head> 
     <body>
         <nav>
@@ -32,6 +35,12 @@
                     </div>
                 </c:if>
                 <h1>Lavadas Pendientes</h1>
+                <c:if test="${not empty lavadas}">
+                    <button class="btn btn-danger"
+                            onclick="exportPDFReporteLavadasPendientes('${pageContext.servletContext.contextPath}')">
+                        Exportar a Pdf
+                    </button>
+                </c:if>
                 <table id="events-table" 
                        data-toggle="table" data-cache="false" 
                        data-height="499" 

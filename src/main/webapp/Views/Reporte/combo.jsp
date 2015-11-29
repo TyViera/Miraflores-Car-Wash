@@ -43,9 +43,6 @@
                     }
                 %>
                 <h3>Total Recaudado: S/. <%=total%>0</h3>
-                <div class="container">
-                    <h4>${clientesReporte.get(0).apellido}, ${clientesReporte.get(0).nombre}</h4>
-                </div>
                 <script type="text/javascript">
                     var data1;
                     data1 = [

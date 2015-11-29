@@ -1,10 +1,18 @@
 --Usuario
 INSERT INTO "public".usuario (enabled, nombrecompleto, password, username)
-        VALUES(TRUE, 'Kevin Mendoza', '81dc9bdb52d04dc20036dbd8313ed055', 'kevin1');
+        VALUES(TRUE, 'Tayler Viera', '81dc9bdb52d04dc20036dbd8313ed055', 'nazaviera');
+INSERT INTO "public".usuario (enabled, nombrecompleto, password, username)
+        VALUES(TRUE, 'Angel Gutierrez', '81dc9bdb52d04dc20036dbd8313ed055', 'angel1');
+INSERT INTO "public".usuario (enabled, nombrecompleto, password, username)
+        VALUES(TRUE, 'Kevin Lozada', '81dc9bdb52d04dc20036dbd8313ed055', 'kevin1');
 
 --Rol
 INSERT INTO "public".usuariorol (authority, usuarioid)
         VALUES('ROLE_USER', 1);
+INSERT INTO "public".usuariorol (authority, usuarioid)
+        VALUES('ROLE_USER', 2);
+INSERT INTO "public".usuariorol (authority, usuarioid)
+        VALUES('ROLE_USER', 3);
 
 --Combo
 
